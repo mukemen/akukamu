@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>akukamu - Tempat Curhat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fef9f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+    header {
+      background-color: #ff9aa2;
+      padding: 1em;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: white;
+    }
+    #chat {
+      flex: 1;
+      padding: 1em;
+      overflow-y: auto;
+    }
+    .message {
+      margin: 0.5em 0;
+    }
+    .user {
+      text-align: right;
+      color: #4a4a4a;
+    }
+    .bot {
+      text-align: left;
+      color: #2d2d2d;
+    }
+    footer {
+      display: flex;
+      padding: 1em;
+      border-top: 1px solid #ccc;
+      background: white;
+    }
+    input {
+      flex: 1;
+      padding: 0.5em;
+      font-size: 1em;
+    }
+    button {
+      background: #ff9aa2;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>akukamu 💌 tempat curhat kamu</header>
+  <div id="chat"></div>
+  <footer>
+    <input type="text" id="userInput" placeholder="Tulis curhatmu..." />
+    <button onclick="sendMessage()">Kirim</button>
+  </footer>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('userInput');
+
+    async function sendMessage() {
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      appendMessage(userText, 'user');
+      input.value = '';
+
+      const response = await fetch('https://YOUR-BACKEND-URL/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userText })
+      });
+
+      const data = await response.json();
+      appendMessage(data.reply, 'bot');
+    }
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      msg.textContent = text;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>
