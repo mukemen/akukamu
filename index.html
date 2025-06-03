@@ -79,7 +79,7 @@
       input.value = '';
 
       try {
-        const response = await fetch('https://akukamu-backend--mukemen.repl.co:8081/api/chat', {
+        const response = await fetch('https://akukamu-backend--mukemen.repl.co:7860/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: userText })
