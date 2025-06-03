@@ -78,7 +78,7 @@
       appendMessage(userText, 'user');
       input.value = '';
 
-      const response = await fetch('https://YOUR-BACKEND-URL/api/chat', {
+      const response = await fetch('https://akukamu-backend.mukemen.repl.co/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userText })
